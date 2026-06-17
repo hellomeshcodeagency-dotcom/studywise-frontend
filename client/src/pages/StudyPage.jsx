@@ -652,16 +652,28 @@ export default function StudyPage() {
     { id:'practice',   icon:'🧩', label:'Practice',  premium:true },
   ]
 
-  async function handlePDF(file) {
-    if (!file||file.type!=='application/pdf') { toast.error('Please upload a PDF'); return }
-    if (!isPremium) { toast.error('PDF upload requires Premium!'); return }
+  const ALLOWED_EXTS = ['.pdf','.docx','.pptx','.txt']
+  const FILE_ICONS   = { '.pdf':'📄', '.docx':'📝', '.pptx':'📊', '.txt':'📃' }
+
+  function getExt(name) { return name.slice(name.lastIndexOf('.')).toLowerCase() }
+
+  async function handleFileUpload(file) {
+    if (!file) return
+    const ext = getExt(file.name)
+    if (!ALLOWED_EXTS.includes(ext)) {
+      toast.error('Please upload a PDF, Word (.docx), PowerPoint (.pptx), or text (.txt) file')
+      return
+    }
+    if (!isPremium) { toast.error('File upload requires Premium!'); return }
     setUploading(true)
     try {
-      const form = new FormData(); form.append('pdf',file)
-      const res = await api.post('/study/upload-pdf', form, { headers:{'Content-Type':'multipart/form-data'} })
-      setPasteText(res.data.text); setInputMode('paste')
-      toast.success(`📄 ${res.data.filename} extracted!`)
-    } catch (e) { toast.error(e.response?.data?.error||'Failed to read PDF') }
+      const form = new FormData()
+      form.append('file', file)
+      const res = await api.post('/study/upload-file', form, { headers:{'Content-Type':'multipart/form-data'} })
+      setPasteText(res.data.text)
+      setInputMode('paste')
+      toast.success(`${FILE_ICONS[ext]||'📄'} ${res.data.filename} extracted! (${res.data.chars?.toLocaleString()} characters)`)
+    } catch (e) { toast.error(e.response?.data?.error||'Failed to read file. Try pasting the text instead.') }
     finally { setUploading(false) }
   }
 
@@ -678,7 +690,8 @@ export default function StudyPage() {
     setUploading(true)
     try {
       const title = text.slice(0,60).replace(/\n/g,' ')+'…'
-      const res = await api.post('/study/session', { title, source_type:inputMode, content_text:text })
+      const sourceType = inputMode === 'file' ? 'pdf' : inputMode
+      const res = await api.post('/study/session', { title, source_type:sourceType, content_text:text })
       setContent(text); setSessionId(res.data.session.id); setSessionTitle(title)
       setContentLoaded(true); setActiveTool('explain')
       toast.success('Content loaded! Choose a tool.')
@@ -686,7 +699,7 @@ export default function StudyPage() {
     finally { setUploading(false) }
   }
 
-  function reset() { setContent(''); setSessionId(null); setContentLoaded(false); setPasteText(''); setUrlInput('') }
+  function reset() { setContent(''); setSessionId(null); setContentLoaded(false); setPasteText(''); setUrlInput(''); setInputMode('paste') }
 
   return (
     <AppShell>
@@ -714,11 +727,11 @@ export default function StudyPage() {
 
             {/* Mode switcher */}
             <div className="flex gap-2 mb-4 flex-wrap">
-              {[['paste','✏️','Paste'],['pdf','📄','PDF'],['url','🔗','URL']].map(([m,icon,label]) => (
+              {[['paste','✏️','Paste Text'],['file','📁','Upload File'],['url','🔗','URL']].map(([m,icon,label]) => (
                 <button key={m} onClick={() => setInputMode(m)}
                   className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium transition-all ${inputMode===m?'text-white':'text-text-2'}`}
                   style={{background:inputMode===m?'rgba(124,58,237,.2)':'rgba(255,255,255,.04)',border:`1px solid ${inputMode===m?'rgba(124,58,237,.4)':'rgba(255,255,255,.08)'}`}}>
-                  {icon} {label}{(m==='pdf'||m==='url')&&!isPremium&&' 🔒'}
+                  {icon} {label}{(m==='file'||m==='url')&&!isPremium&&' 🔒'}
                 </button>
               ))}
             </div>
@@ -728,19 +741,25 @@ export default function StudyPage() {
                 placeholder="Paste your textbook, lecture notes, or article here…"
                 className="input-field resize-none text-sm leading-relaxed mb-4"/>
             )}
-            {inputMode==='pdf' && (
+            {inputMode==='file' && (
               <div>
-                <div onClick={() => isPremium?fileRef.current?.click():toast.error('PDF upload requires Premium!')}
+                <div onClick={() => isPremium?fileRef.current?.click():toast.error('File upload requires Premium!')}
                   className="rounded-xl border-2 border-dashed p-8 text-center cursor-pointer transition-all"
                   style={{borderColor:'rgba(255,255,255,.12)',background:'rgba(255,255,255,.02)'}}
                   onDragOver={e => e.preventDefault()}
-                  onDrop={e => { e.preventDefault(); handlePDF(e.dataTransfer.files[0]) }}>
-                  <div className="text-3xl mb-2">{uploading?'⏳':'📄'}</div>
-                  <p className="text-sm font-semibold text-white mb-1">{uploading?'Reading…':'Drop PDF here or tap to upload'}</p>
-                  <p className="text-xs text-text-3">PDF only · max 20MB · Premium</p>
-                  <input ref={fileRef} type="file" accept=".pdf" className="hidden" onChange={e => handlePDF(e.target.files[0])}/>
+                  onDrop={e => { e.preventDefault(); handleFileUpload(e.dataTransfer.files[0]) }}>
+                  <div className="text-3xl mb-2">{uploading?'⏳':'📁'}</div>
+                  <p className="text-sm font-semibold text-white mb-1">{uploading?'Reading file…':'Drop your file here or tap to upload'}</p>
+                  <p className="text-xs text-text-3 mb-3">PDF · Word (.docx) · PowerPoint (.pptx) · Text (.txt) · max 20MB · Premium</p>
+                  <div className="flex justify-center gap-3 text-2xl">
+                    <span title="PDF">📄</span>
+                    <span title="Word">📝</span>
+                    <span title="PowerPoint">📊</span>
+                    <span title="Text">📃</span>
+                  </div>
+                  <input ref={fileRef} type="file" accept=".pdf,.docx,.pptx,.txt" className="hidden" onChange={e => handleFileUpload(e.target.files[0])}/>
                 </div>
-                {pasteText && <p className="text-xs text-emerald-400 mt-2 text-center">✅ PDF text extracted — ready to load</p>}
+                {pasteText && <p className="text-xs text-emerald-400 mt-2 text-center">✅ File text extracted — ready to load</p>}
               </div>
             )}
             {inputMode==='url' && (
