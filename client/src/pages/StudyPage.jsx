@@ -14,6 +14,7 @@ function Sidebar() {
     { to: '/dashboard', icon: '🏠', label: 'Dashboard' },
     { to: '/study',     icon: '📚', label: 'Study Room' },
     { to: '/history',   icon: '📋', label: 'History' },
+    { to: '/profile',   icon: '👤', label: 'Profile' },
   ]
   return (
     <aside className="fixed left-0 top-0 h-screen w-60 flex flex-col z-40 border-r border-white/8" style={{ background: '#0A0A14' }}>
