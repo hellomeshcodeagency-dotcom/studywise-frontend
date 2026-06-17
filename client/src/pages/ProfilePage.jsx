@@ -3,79 +3,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
 import api from '../api/axios.js'
 import toast from 'react-hot-toast'
-import { LogOut, User, Lock, Gift, BarChart2, Copy, Check, Eye, EyeOff, Save } from 'lucide-react'
+import { User, Lock, Copy, Check, Eye, EyeOff, Save, LogOut } from 'lucide-react'
+import AppShell from '../components/layout/AppShell.jsx'
 
-/* ─── SIDEBAR ───────────────────────────────────────── */
-function Sidebar() {
-  const { user, logout, trialDaysLeft, isOnTrial, hasPremium } = useAuth()
-  const navigate = useNavigate()
-  const days = trialDaysLeft()
-  const links = [
-    { to: '/dashboard', icon: '🏠', label: 'Dashboard' },
-    { to: '/study',     icon: '📚', label: 'Study Room' },
-    { to: '/history',   icon: '📋', label: 'History' },
-    { to: '/profile',   icon: '👤', label: 'Profile' },
-  ]
-  return (
-    <aside className="fixed left-0 top-0 h-screen w-60 flex flex-col z-40 border-r border-white/8" style={{ background: '#0A0A14' }}>
-      <div className="px-6 py-5 border-b border-white/8">
-        <Link to="/" className="flex items-center gap-2.5 no-underline">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center text-base" style={{ background: 'linear-gradient(135deg,#7C3AED,#EC4899)' }}>📚</div>
-          <span className="font-display font-extrabold text-lg text-white tracking-tight">StudyWise</span>
-        </Link>
-      </div>
-      {isOnTrial() ? (
-        <div className="mx-4 mt-4 px-3 py-2.5 rounded-xl" style={{ background: 'rgba(124,58,237,.15)', border: '1px solid rgba(124,58,237,.3)' }}>
-          <div className="text-xs font-bold mb-0.5" style={{ color: '#9D5FF5' }}>⏳ Free Trial</div>
-          <div className="text-xs text-text-2">{days} day{days !== 1 ? 's' : ''} remaining</div>
-          <div className="mt-1.5 h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,.1)' }}>
-            <div className="h-full rounded-full" style={{ width: `${(days / 3) * 100}%`, background: 'linear-gradient(90deg,#7C3AED,#EC4899)' }} />
-          </div>
-        </div>
-      ) : !hasPremium() ? (
-        <div className="mx-4 mt-4 px-3 py-2.5 rounded-xl" style={{ background: 'rgba(245,158,11,.1)', border: '1px solid rgba(245,158,11,.25)' }}>
-          <div className="text-xs font-bold text-amber-400">🔓 Free Plan</div>
-          <div className="text-xs text-text-2 mt-0.5">Upgrade for ₦500/month</div>
-        </div>
-      ) : (
-        <div className="mx-4 mt-4 px-3 py-2.5 rounded-xl" style={{ background: 'rgba(16,185,129,.1)', border: '1px solid rgba(16,185,129,.25)' }}>
-          <div className="text-xs font-bold text-emerald-400">✨ Premium Active</div>
-        </div>
-      )}
-      <nav className="flex-1 px-3 mt-5 flex flex-col gap-1">
-        {links.map(l => (
-          <Link key={l.to} to={l.to}
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium no-underline transition-all ${l.label === 'Profile' ? 'text-white' : 'text-text-2 hover:text-white hover:bg-white/5'}`}
-            style={l.label === 'Profile' ? { background: 'rgba(124,58,237,.2)' } : {}}>
-            <span className="text-base">{l.icon}</span>{l.label}
-            {l.label === 'Profile' && <div className="ml-auto w-1.5 h-1.5 rounded-full" style={{ background: '#9D5FF5' }} />}
-          </Link>
-        ))}
-        {!hasPremium() && (
-          <div className="mt-4">
-            <button onClick={() => toast('Paystack payments coming soon! 🚀')} className="btn-primary w-full justify-center text-xs py-2.5">
-              ⚡ Upgrade — ₦500/mo
-            </button>
-          </div>
-        )}
-      </nav>
-      <div className="px-4 py-4 border-t border-white/8">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white" style={{ background: 'linear-gradient(135deg,#7C3AED,#EC4899)' }}>
-            {user?.name?.[0]?.toUpperCase()}
-          </div>
-          <div className="min-w-0">
-            <div className="text-xs font-semibold text-white truncate">{user?.name}</div>
-            <div className="text-[0.65rem] text-text-3 truncate">{user?.email}</div>
-          </div>
-        </div>
-        <button onClick={() => { logout(); navigate('/') }} className="flex items-center gap-2 text-xs text-text-3 hover:text-text-2 transition-colors">
-          <LogOut size={13} /> Log out
-        </button>
-      </div>
-    </aside>
-  )
-}
 
 /* ─── SECTION CARD ──────────────────────────────────── */
 function SectionCard({ icon, title, children }) {
@@ -174,10 +104,8 @@ export default function ProfilePage() {
     : 'Free Plan'
 
   return (
-    <div className="min-h-screen bg-black">
-      <Sidebar />
-      <main className="ml-60 min-h-screen">
-        <div className="max-w-3xl mx-auto px-8 py-8">
+    <AppShell>
+      <div className="max-w-3xl mx-auto px-4 md:px-8 py-5 md:py-8">
 
           {/* Header */}
           <div className="mb-8">
@@ -450,8 +378,7 @@ export default function ProfilePage() {
             </SectionCard>
 
           </div>
-        </div>
-      </main>
-    </div>
+      </div>
+    </AppShell>
   )
 }
