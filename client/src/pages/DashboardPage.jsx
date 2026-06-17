@@ -15,6 +15,7 @@ function Sidebar({ active }) {
     { to: '/dashboard', icon: '🏠', label: 'Dashboard' },
     { to: '/study',     icon: '📚', label: 'Study Room' },
     { to: '/history',   icon: '📋', label: 'History' },
+    { to: '/profile',   icon: '👤', label: 'Profile' },
   ]
 
   return (
