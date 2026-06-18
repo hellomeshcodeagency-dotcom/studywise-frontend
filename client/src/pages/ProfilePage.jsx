@@ -266,7 +266,7 @@ export default function ProfilePage() {
                 </div>
                 {!isPremium && (
                   <button onClick={() => toast('Paystack payments coming soon! 🚀')} className="btn-primary text-sm py-2 px-5">
-                    Upgrade ₦500/mo
+                    Upgrade ₦700/mo
                   </button>
                 )}
               </div>
