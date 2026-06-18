@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
 import AppShell from '../components/layout/AppShell.jsx'
@@ -29,10 +29,25 @@ function CreatePlanForm({ onCreated }) {
   const [subjects, setSubjects]     = useState([''])
   const [weakAreas, setWeakAreas]   = useState('')
   const [loading, setLoading]       = useState(false)
+  const [docFile, setDocFile]       = useState(null)
+  const [docUploading, setDocUploading] = useState(false)
+  const fileRef                     = useRef(null)
 
   function addSubject() { setSubjects(s => [...s, '']) }
   function removeSubject(i) { setSubjects(s => s.filter((_, idx) => idx !== i)) }
   function updateSubject(i, val) { setSubjects(s => s.map((x, idx) => idx === i ? val : x)) }
+
+  function handleFile(file) {
+    if (!file) return
+    const ext = file.name.split('.').pop().toLowerCase()
+    if (!['pdf','docx','pptx','txt'].includes(ext)) {
+      toast.error('Please upload PDF, Word, PowerPoint or TXT file')
+      return
+    }
+    if (file.size > 20 * 1024 * 1024) { toast.error('File too large. Max 20MB.'); return }
+    setDocFile(file)
+    toast.success(`📄 ${file.name} ready`)
+  }
 
   // Min date = tomorrow
   const minDate = new Date()
@@ -47,11 +62,16 @@ function CreatePlanForm({ onCreated }) {
 
     setLoading(true)
     try {
-      const res = await api.post('/study/plan/create', {
-        exam_name:  examName.trim(),
-        exam_date:  examDate,
-        subjects:   filteredSubjects,
-        weak_areas: weakAreas.trim(),
+      // Use FormData to send file + fields together
+      const form = new FormData()
+      form.append('exam_name',  examName.trim())
+      form.append('exam_date',  examDate)
+      form.append('subjects',   JSON.stringify(filteredSubjects))
+      form.append('weak_areas', weakAreas.trim())
+      if (docFile) form.append('document', docFile)
+
+      const res = await api.post('/study/plan/create', form, {
+        headers: { 'Content-Type': 'multipart/form-data' }
       })
       toast.success('Study plan created! 🎉')
       onCreated(res.data.plan)
@@ -137,11 +157,56 @@ function CreatePlanForm({ onCreated }) {
           </p>
         </div>
 
+        {/* Document upload */}
+        <div>
+          <label className="block text-xs font-semibold text-text-2 uppercase tracking-wider mb-2">
+            Upload Study Material <span className="text-text-3 normal-case font-normal">(optional — makes topics more accurate)</span>
+          </label>
+          <div
+            onClick={() => fileRef.current?.click()}
+            onDragOver={e => e.preventDefault()}
+            onDrop={e => { e.preventDefault(); handleFile(e.dataTransfer.files[0]) }}
+            className="rounded-xl border-2 border-dashed p-5 text-center cursor-pointer transition-all hover:border-violet/50"
+            style={{ borderColor: docFile ? 'rgba(124,58,237,0.5)' : 'rgba(255,255,255,0.12)', background: docFile ? 'rgba(124,58,237,0.06)' : 'rgba(255,255,255,0.02)' }}>
+            {docFile ? (
+              <div className="flex items-center justify-center gap-3">
+                <span className="text-2xl">
+                  {docFile.name.endsWith('.pdf') ? '📄' : docFile.name.endsWith('.docx') ? '📝' : docFile.name.endsWith('.pptx') ? '📊' : '📃'}
+                </span>
+                <div className="text-left">
+                  <div className="text-sm font-semibold text-white">{docFile.name}</div>
+                  <div className="text-xs text-text-3">{(docFile.size / 1024).toFixed(0)} KB · Click to change</div>
+                </div>
+                <button onClick={e => { e.stopPropagation(); setDocFile(null) }}
+                  className="ml-2 text-text-3 hover:text-rose-400 transition-colors">✕</button>
+              </div>
+            ) : (
+              <div>
+                <div className="flex justify-center gap-3 text-2xl mb-2">📄 📝 📊 📃</div>
+                <p className="text-sm font-semibold text-white mb-0.5">Drop your textbook or notes here</p>
+                <p className="text-xs text-text-3">PDF · Word · PowerPoint · TXT · max 20MB</p>
+              </div>
+            )}
+            <input ref={fileRef} type="file" accept=".pdf,.docx,.pptx,.txt" className="hidden"
+                   onChange={e => handleFile(e.target.files[0])}/>
+          </div>
+          {docFile && (
+            <p className="text-xs mt-1.5" style={{ color: '#9D5FF5' }}>
+              ✨ Topics will be extracted directly from your document
+            </p>
+          )}
+          {!docFile && (
+            <p className="text-xs text-text-3 mt-1.5">
+              Without a document, topics are generated from your subject names
+            </p>
+          )}
+        </div>
+
         <button onClick={submit} disabled={loading} className="btn-primary w-full justify-center py-3.5">
           {loading
             ? <span className="flex items-center gap-2">
                 <span className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"/>
-                Building your plan…
+                {docFile ? 'Reading document & building plan…' : 'Building your plan…'}
               </span>
             : <><Zap size={15}/> Generate My Study Plan</>
           }
@@ -246,14 +311,20 @@ function PlanView({ plan, onUpdate, onDelete }) {
           </div>
         </div>
 
-        {/* Subjects */}
-        <div className="mt-4 flex flex-wrap gap-2">
+        {/* Subjects + document */}
+        <div className="mt-4 flex flex-wrap gap-2 items-center">
           {plan.subjects?.map(s => (
             <span key={s} className="text-xs px-2.5 py-1 rounded-full font-medium"
                   style={{ background:'rgba(124,58,237,0.15)',border:'1px solid rgba(124,58,237,0.3)',color:'#9D5FF5' }}>
               {s}
             </span>
           ))}
+          {plan.document_name && (
+            <span className="text-xs px-2.5 py-1 rounded-full font-medium flex items-center gap-1"
+                  style={{ background:'rgba(16,185,129,0.1)',border:'1px solid rgba(16,185,129,0.3)',color:'#34D399' }}>
+              📄 {plan.document_name}
+            </span>
+          )}
         </div>
       </div>
 
