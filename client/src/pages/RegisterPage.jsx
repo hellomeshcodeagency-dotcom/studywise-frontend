@@ -58,7 +58,7 @@ export default function RegisterPage() {
     }
   }
 
-  const trialDays = form.referral_code ? 6 : 3
+  const trialDays = form.referral_code ? 10 : 7
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center px-4 py-12 relative overflow-hidden">
@@ -87,7 +87,7 @@ export default function RegisterPage() {
           <div>
             {refApplied ? (
               <>
-                <div className="text-sm font-bold" style={{ color: '#22D3EE' }}>Referral applied! You get 6 days free</div>
+                <div className="text-sm font-bold" style={{ color: '#22D3EE' }}>Referral applied! You get 10 days free</div>
                 <div className="text-xs text-text-2">Your friend gave you 3 extra trial days</div>
               </>
             ) : (
@@ -183,7 +183,7 @@ export default function RegisterPage() {
             {/* Referral code */}
             <div>
               <label className="block text-xs font-semibold text-text-2 uppercase tracking-wider mb-2">
-                Referral code <span className="text-text-3 normal-case font-normal">(optional — get 6 days free)</span>
+                Referral code <span className="text-text-3 normal-case font-normal">(optional — get 10 days free)</span>
               </label>
               <input
                 type="text"
