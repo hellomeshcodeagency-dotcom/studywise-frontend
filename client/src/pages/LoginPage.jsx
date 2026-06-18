@@ -43,7 +43,7 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2.5 no-underline mb-6">
-            <img src="/logo.png" alt="StudyWise" className="w-16 h-16 rounded-2xl object-contain" />
+            <img src="/logo.png" alt="StudyWise" className="w-70 h-40 rounded-2xl object-contain" />
           </Link>
           <h1 className="font-display font-bold text-3xl text-white mb-2">Welcome back</h1>
           <p className="text-text-2 text-sm">Log in to continue studying smarter</p>
