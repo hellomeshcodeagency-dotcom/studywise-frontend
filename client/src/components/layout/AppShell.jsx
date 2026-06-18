@@ -40,7 +40,7 @@ export default function AppShell({ children }) {
             <div className="text-xs font-bold mb-0.5" style={{ color:'#9D5FF5' }}>⏳ Free Trial</div>
             <div className="text-xs text-text-2">{days} day{days!==1?'s':''} remaining</div>
             <div className="mt-1.5 h-1.5 rounded-full overflow-hidden" style={{ background:'rgba(255,255,255,.1)' }}>
-              <div className="h-full rounded-full" style={{ width:`${(days/3)*100}%`,background:'linear-gradient(90deg,#7C3AED,#EC4899)' }}/>
+              <div className="h-full rounded-full" style={{ width:`${(days/7)*100}%`,background:'linear-gradient(90deg,#7C3AED,#EC4899)' }}/>
             </div>
           </div>
         ) : isPremium ? (
