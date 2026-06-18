@@ -20,7 +20,7 @@ function Navbar() {
       <div className="page-container">
         <div className="h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5 no-underline">
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center text-xl" style={{ background: 'linear-gradient(135deg,#7C3AED,#EC4899)' }}>📚</div>
+            <img src="/logo.png" alt="StudyWise" className="w-9 h-9 rounded-xl object-contain" />
             <span className="font-display font-extrabold text-xl text-white tracking-tight">StudyWise</span>
           </Link>
           <ul className="hidden md:flex items-center gap-8 list-none">
@@ -485,7 +485,7 @@ function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-12">
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center text-xl" style={{ background:'linear-gradient(135deg,#7C3AED,#EC4899)' }}>📚</div>
+              <img src="/logo.png" alt="StudyWise" className="w-9 h-9 rounded-xl object-contain" />
               <span className="font-display font-extrabold text-xl text-white">StudyWise</span>
             </div>
             <p className="text-sm text-text-2 leading-relaxed max-w-[200px]">Smart study platform for students at every level — primary, secondary and university.</p>
