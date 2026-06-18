@@ -12,7 +12,7 @@ function LockedOverlay({ feature }) {
       <div className="text-center px-6">
         <div className="text-4xl mb-3">🔒</div>
         <div className="font-display font-bold text-white text-base mb-2">{feature} is Premium</div>
-        <p className="text-sm text-text-2 mb-4">Upgrade for ₦500/month</p>
+        <p className="text-sm text-text-2 mb-4">Upgrade for ₦700/month</p>
         <button onClick={() => toast('Paystack payments coming soon! 🚀')} className="btn-primary text-sm py-2.5 px-5">⚡ Upgrade Now</button>
       </div>
     </div>
