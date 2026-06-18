@@ -488,7 +488,7 @@ function Footer() {
               <div className="w-9 h-9 rounded-xl flex items-center justify-center text-xl" style={{ background:'linear-gradient(135deg,#7C3AED,#EC4899)' }}>📚</div>
               <span className="font-display font-extrabold text-xl text-white">StudyWise</span>
             </div>
-            <p className="text-sm text-text-2 leading-relaxed max-w-[200px]">Smart study platform for students at every level — primary, secondary and university.</p>
+            <p className="text-sm text-text-2 leading-relaxed max-w-[200px]">Smart study platform for students at every level.</p>
           </div>
           {[{title:'Product',links:['Features','Pricing','Referral','Changelog']},{title:'Company',links:['About','Blog','Contact','Careers']},{title:'Legal',links:['Privacy Policy','Terms of Use','Cookie Policy']}].map(col => (
             <div key={col.title}>
@@ -501,7 +501,7 @@ function Footer() {
         </div>
         <div className="pt-7 border-t border-white/8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-text-3">
           <span>© 2025 StudyWise. All rights reserved.</span>
-          <span>Made with ❤️ in Nigeria 🇳🇬</span>
+          <span>Made with ❤️ by MeshCode 🇳🇬</span>
         </div>
       </div>
     </footer>
