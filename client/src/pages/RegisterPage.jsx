@@ -72,8 +72,7 @@ export default function RegisterPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2.5 no-underline mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
-                 style={{ background: 'linear-gradient(135deg,#7C3AED,#EC4899)' }}>📚</div>
+            <img src="/logo.png" alt="StudyWise" className="w-10 h-10 rounded-xl object-contain" />
             <span className="font-display font-extrabold text-2xl text-white tracking-tight">StudyWise</span>
           </Link>
           <h1 className="font-display font-bold text-3xl text-white mb-2">Create your account</h1>
