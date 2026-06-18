@@ -815,7 +815,7 @@ export default function StudyPage() {
         {/* Header */}
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h1 className="font-display font-extrabold text-2xl md:text-3xl text-white mb-0.5">Study Room 📚</h1>
+            <h1 className="font-display font-extrabold text-2xl md:text-3xl text-white mb-0.5">Study Room</h1>
             <p className="text-text-2 text-xs md:text-sm truncate max-w-[200px] md:max-w-none">
               {contentLoaded ? sessionTitle : 'Upload material to get started'}
             </p>
