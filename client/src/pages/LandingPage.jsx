@@ -449,9 +449,9 @@ function Referral() {
 /* ─── TESTIMONIALS ──────────────────────────────────── */
 function Testimonials() {
   const t = [
-    ['"I used to spend hours struggling with Organic Chemistry. StudyWise explained it better in 2 minutes than my lecturer did all semester."','Amaka O.','300L Biochemistry, University of Lagos','linear-gradient(135deg,#7C3AED,#EC4899)','A'],
-    ['"Studied for GNS in one night using flashcards and scored 85. My roommates are all using it now."','Chisom E.','200L Law, University of Nigeria','linear-gradient(135deg,#06B6D4,#7C3AED)','C'],
-    ['"The subscription pays for itself in the first week. I've replaced so many textbooks and tutors with this."','Emmanuel K.','400L Engineering, ABU Zaria','linear-gradient(135deg,#F59E0B,#EC4899)','E'],
+    ["I used to spend hours struggling with Organic Chemistry. StudyWise explained it better in 2 minutes than my lecturer did all semester.", 'Amaka O.', '300L Biochemistry, University of Lagos', 'linear-gradient(135deg,#7C3AED,#EC4899)', 'A'],
+    ["Studied for GNS in one night using flashcards and scored 85. My roommates are all using it now.", 'Chisom E.', '200L Law, University of Nigeria', 'linear-gradient(135deg,#06B6D4,#7C3AED)', 'C'],
+    ["The subscription pays for itself in the first week. I've replaced so many textbooks and tutors with this.", 'Emmanuel K.', '400L Engineering, ABU Zaria', 'linear-gradient(135deg,#F59E0B,#EC4899)', 'E'],
   ]
   return (
     <section className="py-20 pb-28">
@@ -464,7 +464,7 @@ function Testimonials() {
           {t.map(([q,n,r,g,l]) => (
             <div key={n} className="glass grad-border rounded-2xl p-7 hover:-translate-y-1 transition-transform">
               <div className="text-yellow-400 text-sm mb-4">★★★★★</div>
-              <p className="text-sm text-text-2 leading-relaxed italic mb-6">{q}</p>
+              <p className="text-sm text-text-2 leading-relaxed italic mb-6">"{q}"</p>
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-extrabold text-white flex-shrink-0" style={{ background:g }}>{l}</div>
                 <div><div className="text-sm font-semibold text-white">{n}</div><div className="text-xs text-text-2">{r}</div></div>
