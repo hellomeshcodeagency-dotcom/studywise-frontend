@@ -109,7 +109,7 @@ function Hero() {
               Upload your textbooks, notes, or articles — StudyWise instantly turns them into explanations, quizzes, flashcards, mind maps and more.
             </p>
             <div className="flex items-center gap-4 flex-wrap">
-              <Link to="/register" className="btn-primary text-base px-8 py-4">🚀 Start free for 3 days</Link>
+              <Link to="/register" className="btn-primary text-base px-8 py-4">🚀 Start free for 7 days</Link>
               <a href="#features" className="btn-ghost text-sm">See how it works</a>
             </div>
             <div className="flex items-center gap-3 mt-8">
@@ -332,15 +332,15 @@ function TrialBanner() {
           <div className="absolute -bottom-16 left-[20%] w-72 h-72 rounded-full pointer-events-none" style={{ background:'radial-gradient(circle,rgba(236,72,153,.2),transparent 70%)' }}/>
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
             <div className="max-w-lg">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-5" style={{ background:'rgba(245,158,11,.18)',border:'1px solid rgba(245,158,11,.35)',color:'#F59E0B' }}>⏳ 3-day free trial</div>
-              <h2 className="section-title text-4xl md:text-5xl mb-4">3 days free.<br/><span className="grad-text">No card. No catch.</span></h2>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-5" style={{ background:'rgba(245,158,11,.18)',border:'1px solid rgba(245,158,11,.35)',color:'#F59E0B' }}>⏳ 7-day free trial</div>
+              <h2 className="section-title text-4xl md:text-5xl mb-4">7 days free.<br/><span className="grad-text">No card. No catch.</span></h2>
               <p className="text-text-2 text-lg leading-relaxed mb-7">Full access to every feature — PDF uploads, unlimited quizzes, flashcards, mind maps, Tutor chat, and more.</p>
               <Link to="/register" className="btn-primary text-base px-8 py-4">🚀 Claim your free trial</Link>
             </div>
             <div className="flex-shrink-0 text-center rounded-2xl p-10" style={{ background:'rgba(255,255,255,.05)',border:'1px solid rgba(255,255,255,.1)' }}>
-              <div className="font-display font-extrabold leading-none grad-text mb-2" style={{ fontSize:'6rem' }}>3</div>
+              <div className="font-display font-extrabold leading-none grad-text mb-2" style={{ fontSize:'6rem' }}>7</div>
               <div className="text-text-2 text-sm font-medium">days completely free</div>
-              <div className="text-text-3 text-xs mt-3">Then just ₦500/month</div>
+              <div className="text-text-3 text-xs mt-3">Then just ₦700/month</div>
             </div>
           </div>
         </div>
@@ -389,7 +389,7 @@ function Pricing() {
           <div className="relative rounded-2xl p-9" style={{ background:'linear-gradient(135deg,rgba(124,58,237,.2),rgba(236,72,153,.1))',border:'1px solid rgba(124,58,237,.4)' }}>
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 text-[0.58rem] font-extrabold tracking-widest text-white px-4 py-1 rounded-full" style={{ background:'linear-gradient(135deg,#7C3AED,#EC4899)' }}>MOST POPULAR</div>
             <div className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color:'#9D5FF5' }}>Premium Plan</div>
-            <div className="font-display font-extrabold text-5xl tracking-tight grad-text mb-1">₦500</div>
+            <div className="font-display font-extrabold text-5xl tracking-tight grad-text mb-1">₦700</div>
             <div className="text-sm text-text-2 mb-7">per month</div>
             <ul className="space-y-2.5 mb-8">
               {premF.map(t => (
@@ -399,7 +399,7 @@ function Pricing() {
                 </li>
               ))}
             </ul>
-            <Link to="/register" className="btn-primary w-full justify-center">🚀 Start 3-day free trial</Link>
+            <Link to="/register" className="btn-primary w-full justify-center">🚀 Start 7-day free trial</Link>
             <p className="text-center text-xs text-text-3 mt-3">No credit card required</p>
           </div>
         </div>
@@ -526,7 +526,7 @@ export default function LandingPage() {
       <section className="py-20">
         <div className="page-container text-center">
           <h2 className="section-title text-4xl md:text-5xl mb-4">Ready to study smarter?<br/><span className="grad-text">Start free today.</span></h2>
-          <p className="text-text-2 text-lg mb-8">3 days full access. No credit card needed. Cancel anytime.</p>
+          <p className="text-text-2 text-lg mb-8">7 days full access. No credit card needed. Cancel anytime.</p>
           <Link to="/register" className="btn-primary text-lg px-10 py-5">🚀 Create free account</Link>
         </div>
       </section>
