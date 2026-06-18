@@ -29,7 +29,7 @@ export default function AppShell({ children }) {
     <>
       <div className="px-5 py-4 border-b border-white/8 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2.5 no-underline" onClick={() => setOpen(false)}>
-          <img src="/logo.png" alt="StudyWise" className="w-10 h-10 rounded-lg object-contain" />
+          <img src="/logo.png" alt="StudyWise" className="w-70 h-40 rounded-lg object-contain" />
         </Link>
         <button className="md:hidden text-text-3 hover:text-white" onClick={() => setOpen(false)}><X size={20}/></button>
       </div>
@@ -104,7 +104,7 @@ export default function AppShell({ children }) {
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 h-14 border-b border-white/8"
            style={{background:'rgba(10,10,20,.96)',backdropFilter:'blur(20px)'}}>
         <Link to="/" className="flex items-center gap-2 no-underline">
-          <img src="/logo.png" alt="StudyWise" className="w-9 h-9 rounded-lg object-contain" />
+          <img src="/logo.png" alt="StudyWise" className="w-30 h-15 rounded-lg object-contain" />
         </Link>
         <button onClick={() => setOpen(true)} className="text-text-2 hover:text-white p-1"><Menu size={22}/></button>
       </div>
