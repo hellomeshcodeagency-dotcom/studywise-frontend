@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext.jsx'
 import AppShell from '../components/layout/AppShell.jsx'
 import api from '../api/axios.js'
 import toast from 'react-hot-toast'
-import { RotateCcw, Send, Timer, X, Check, ChevronLeft, ChevronRight, Lock } from 'lucide-react'
+import { RotateCcw, Send, Timer, X, Check, ChevronLeft, ChevronRight, Lock, Mic, MicOff, Volume2, VolumeX } from 'lucide-react'
 
 /* ─── LOCKED OVERLAY ────────────────────────────────── */
 function LockedOverlay({ feature }) {
@@ -497,20 +497,71 @@ function MindmapTool({ content, sessionId, isPremium }) {
 
 /* ─── AI CHAT ───────────────────────────────────────── */
 function ChatTool({ content, sessionId, isPremium }) {
-  const [messages, setMessages] = useState([])
-  const [input, setInput]       = useState('')
-  const [loading, setLoading]   = useState(false)
-  const bottomRef               = useRef(null)
+  const [messages, setMessages]   = useState([])
+  const [input, setInput]         = useState('')
+  const [loading, setLoading]     = useState(false)
+  const [listening, setListening] = useState(false)
+  const [speaking, setSpeaking]   = useState(false)
+  const [showText, setShowText]   = useState(true)
+  const [voiceSupported, setVoiceSupported] = useState(true)
+  const bottomRef    = useRef(null)
+  const recognRef    = useRef(null)
+  const synthRef     = useRef(null)
+
+  useEffect(() => {
+    synthRef.current = window.speechSynthesis
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition
+    if (!SR) { setVoiceSupported(false); return }
+    const r = new SR()
+    r.continuous = false; r.interimResults = false; r.lang = 'en-US'
+    r.onresult = (e) => {
+      const t = e.results[0][0].transcript
+      setInput(t)
+    }
+    r.onerror = () => setListening(false)
+    r.onend   = () => setListening(false)
+    recognRef.current = r
+  }, [])
 
   useEffect(() => { bottomRef.current?.scrollIntoView({behavior:'smooth'}) }, [messages])
+
+  function toggleMic() {
+    if (!voiceSupported) { toast.error('Voice not supported. Try Chrome.'); return }
+    if (listening) {
+      recognRef.current?.stop()
+      setListening(false)
+    } else {
+      setInput('')
+      setListening(true)
+      try { recognRef.current?.start() } catch { setListening(false) }
+    }
+  }
+
+  function speakText(text) {
+    if (!synthRef.current) return
+    synthRef.current.cancel()
+    const u = new SpeechSynthesisUtterance(text)
+    u.rate = 0.95; u.pitch = 1; u.volume = 1
+    const voices = synthRef.current.getVoices()
+    const preferred = voices.find(v => v.name.includes('Google') || v.lang === 'en-US')
+    if (preferred) u.voice = preferred
+    u.onstart = () => setSpeaking(true)
+    u.onend   = () => setSpeaking(false)
+    u.onerror = () => setSpeaking(false)
+    synthRef.current.speak(u)
+  }
+
+  function stopSpeaking() { synthRef.current?.cancel(); setSpeaking(false) }
 
   async function send() {
     if (!input.trim()) return
     const userMsg = { role:'user', content:input }
     setMessages(m => [...m,userMsg]); setInput(''); setLoading(true)
     try {
-      const res = await api.post('/study/chat', { session_id:sessionId, content, history:messages, message:input })
-      setMessages(m => [...m,{ role:'assistant', content:res.data.reply }])
+      const res = await api.post('/study/chat', { session_id:sessionId, content, history:messages, message:userMsg.content })
+      const reply = res.data.reply
+      setMessages(m => [...m,{ role:'assistant', content:reply }])
+      speakText(reply)
     } catch (e) { toast.error(e.response?.data?.message||'AI error. Try again.') }
     finally { setLoading(false) }
   }
@@ -518,17 +569,37 @@ function ChatTool({ content, sessionId, isPremium }) {
   return (
     <div className="relative">
       {!isPremium && <LockedOverlay feature="AI Tutor Chat"/>}
-      <div className="glass rounded-2xl overflow-hidden flex flex-col" style={{height:'420px'}}>
+      <div className="glass rounded-2xl overflow-hidden flex flex-col" style={{height:'480px'}}>
+        {/* Header */}
         <div className="px-4 py-3 border-b border-white/8 flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-emerald-400"/>
           <span className="text-sm font-semibold text-white">AI Tutor</span>
           <span className="text-xs text-text-3 ml-1 hidden sm:inline">— Ask anything about your content</span>
+          <div className="ml-auto flex items-center gap-2">
+            {/* Text toggle */}
+            <button onClick={() => setShowText(s => !s)}
+              className="text-[0.65rem] font-semibold px-2.5 py-1 rounded-full transition-all"
+              style={{ background:showText?'rgba(124,58,237,0.25)':'rgba(255,255,255,0.06)', color:showText?'#9D5FF5':'#A0A0C0' }}>
+              {showText ? 'Text ON' : 'Text OFF'}
+            </button>
+            {/* Stop speaking */}
+            {speaking && (
+              <button onClick={stopSpeaking}
+                className="text-[0.65rem] font-semibold px-2.5 py-1 rounded-full text-amber-400"
+                style={{ background:'rgba(245,158,11,0.15)', border:'1px solid rgba(245,158,11,0.3)' }}>
+                <VolumeX size={11} className="inline mr-1"/>Stop
+              </button>
+            )}
+          </div>
         </div>
+
+        {/* Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-3">
           {messages.length===0 && (
             <div className="text-center py-8">
               <div className="text-4xl mb-3">🤖</div>
-              <p className="text-sm text-text-2 mb-4">Ask me anything about your content!</p>
+              <p className="text-sm text-text-2 mb-1">Ask me anything about your content!</p>
+              <p className="text-xs text-text-3 mb-4">Type or tap the mic 🎙️ to speak</p>
               <div className="flex flex-col gap-2">
                 {['Summarise the main idea','What are the key concepts?','Explain in simple terms'].map(s => (
                   <button key={s} onClick={() => setInput(s)} className="text-xs px-3 py-2 rounded-xl text-text-2 hover:text-white transition-colors"
@@ -542,8 +613,10 @@ function ChatTool({ content, sessionId, isPremium }) {
           {messages.map((m,i) => (
             <div key={i} className={`flex ${m.role==='user'?'justify-end':''}`}>
               <div className={`max-w-[85%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed ${m.role==='user'?'text-white':'text-text-2'}`}
-                style={m.role==='user'?{background:'linear-gradient(135deg,#7C3AED,#EC4899)'}:{background:'rgba(255,255,255,.05)',border:'1px solid rgba(255,255,255,.08)'}}>
-                {m.content}
+                style={m.role==='user'
+                  ? {background:'linear-gradient(135deg,#7C3AED,#EC4899)'}
+                  : {background:'rgba(255,255,255,.05)',border:'1px solid rgba(255,255,255,.08)'}}>
+                {showText || m.role === 'user' ? m.content : <span className="italic text-text-3">Voice response playing…</span>}
               </div>
             </div>
           ))}
@@ -551,20 +624,52 @@ function ChatTool({ content, sessionId, isPremium }) {
             <div className="flex">
               <div className="px-3.5 py-2.5 rounded-2xl" style={{background:'rgba(255,255,255,.05)',border:'1px solid rgba(255,255,255,.08)'}}>
                 <div className="flex gap-1 items-center">
-                  {[0,1,2].map(i => <div key={i} className="w-1.5 h-1.5 rounded-full bg-violet-l animate-bounce" style={{animationDelay:`${i*0.15}s`}}/>)}
+                  {[0,1,2].map(i => <div key={i} className="w-1.5 h-1.5 rounded-full animate-bounce" style={{background:'#9D5FF5',animationDelay:`${i*0.15}s`}}/>)}
                 </div>
               </div>
             </div>
           )}
           <div ref={bottomRef}/>
         </div>
+
+        {/* Input row */}
         <div className="px-3 py-3 border-t border-white/8 flex gap-2">
-          <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key==='Enter'&&!e.shiftKey&&send()}
-            placeholder="Ask a question…" className="input-field text-sm py-2.5 flex-1"/>
-          <button onClick={send} disabled={loading||!input.trim()} className="btn-primary text-sm py-2.5 px-4">
+          {/* Mic button */}
+          <button onClick={toggleMic} disabled={loading}
+            className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-all ${listening?'animate-pulse':''}`}
+            style={{
+              background: listening ? 'linear-gradient(135deg,#EF4444,#F59E0B)' : 'rgba(124,58,237,0.2)',
+              border: `1px solid ${listening ? 'rgba(239,68,68,0.5)' : 'rgba(124,58,237,0.4)'}`,
+            }}
+            title={listening ? 'Stop listening' : 'Tap to speak'}>
+            {listening ? <MicOff size={16} color="#fff"/> : <Mic size={16} color="#9D5FF5"/>}
+          </button>
+
+          <input value={input} onChange={e => setInput(e.target.value)}
+            onKeyDown={e => e.key==='Enter'&&!e.shiftKey&&send()}
+            placeholder={listening ? 'Listening… speak now' : 'Ask a question or tap mic…'}
+            className="input-field text-sm py-2.5 flex-1"
+            style={listening ? {borderColor:'rgba(239,68,68,0.5)',boxShadow:'0 0 0 2px rgba(239,68,68,0.15)'} : {}}/>
+
+          <button onClick={send} disabled={loading||!input.trim()} className="btn-primary text-sm py-2.5 px-4 flex-shrink-0">
             <Send size={14}/>
           </button>
         </div>
+
+        {/* Listening indicator */}
+        {listening && (
+          <div className="px-4 py-2 flex items-center gap-2 border-t border-white/8"
+               style={{background:'rgba(239,68,68,0.08)'}}>
+            <div className="flex gap-1">
+              {[0,1,2,3].map(i => (
+                <div key={i} className="w-1 rounded-full animate-bounce"
+                     style={{height:`${8+i*4}px`,background:'#EF4444',animationDelay:`${i*0.1}s`}}/>
+              ))}
+            </div>
+            <span className="text-xs text-rose-400 font-medium">Listening… speak your question</span>
+            <button onClick={toggleMic} className="ml-auto text-xs text-rose-400 hover:text-rose-300">Done</button>
+          </div>
+        )}
       </div>
     </div>
   )
