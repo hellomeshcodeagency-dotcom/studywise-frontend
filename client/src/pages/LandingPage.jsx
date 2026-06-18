@@ -100,13 +100,13 @@ function Hero() {
           {/* Copy */}
           <div className="animate-fade-up">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6" style={{ background:'rgba(124,58,237,.15)',border:'1px solid rgba(124,58,237,.3)',color:'#9D5FF5' }}>
-              Made for students &nbsp;·&nbsp;<span style={{ color:'#F472B6' }}></span>
+              🎓 Built for every student &nbsp;·&nbsp;<span style={{ color:'#F472B6' }}>Smart Learning</span>
             </div>
             <h1 className="section-title mb-5" style={{ fontSize:'clamp(2.5rem,5vw,3.75rem)' }}>
               Study smarter.<br/>Score <span className="grad-text">higher.</span><br/>Graduate <span className="grad-text-cool">stronger.</span>
             </h1>
             <p className="text-text-2 text-lg leading-relaxed mb-9 max-w-[480px]">
-              Upload your textbooks, notes, or articles — StudyWise turns them into explanations, quizzes, flashcards, mind maps and more.
+              Upload your textbooks, notes, or articles — StudyWise instantly turns them into explanations, quizzes, flashcards, mind maps and more.
             </p>
             <div className="flex items-center gap-4 flex-wrap">
               <Link to="/register" className="btn-primary text-base px-8 py-4">🚀 Start free for 3 days</Link>
@@ -169,7 +169,7 @@ function Hero() {
 
 /* ─── MARQUEE ───────────────────────────────────────── */
 function Marquee() {
-  const items = ['Explanations','Smart Quizzes','Flashcard Decks','Mind Maps','PDF Upload','Practice Problems','Tutor Chat','Study Summaries','Pomodoro Timer','Progress Tracking']
+  const items = ['Smart Explanations','Smart Quizzes','Flashcard Decks','Mind Maps','PDF Upload','Practice Problems','Tutor Chat','Study Summaries','Pomodoro Timer','Progress Tracking']
   const doubled = [...items,...items]
   return (
     <div className="py-4 border-t border-b border-white/8 overflow-hidden">
@@ -191,12 +191,12 @@ function Stats() {
       <div className="page-container">
         <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-white/8 rounded-2xl overflow-hidden border border-white/8" style={{ background:'#0E0E1A' }}>
           {[['2,000+','Active students','grad-text'],['50k+','Quizzes taken','grad-text-cool'],['120k+','Flashcards studied',''],['4.9★','Average rating','grad-text']].map(([n,l,g]) => (
-            <div key={l} className="py-10 px-8 text-center">
-              <div className={`font-display font-extrabold text-5xl tracking-tight leading-none mb-2 ${g || ''}`}
-                   style={!g ? { background:'linear-gradient(135deg,#EC4899,#F59E0B)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text' } : {}}>
+            <div key={l} className="py-7 px-4 text-center">
+              <div className={`font-display font-extrabold tracking-tight leading-none mb-2 ${g || ''}`}
+                   style={{ fontSize:'clamp(1.5rem,6vw,3rem)', ...((!g) ? { background:'linear-gradient(135deg,#EC4899,#F59E0B)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text' } : {}) }}>
                 {n}
               </div>
-              <div className="text-sm text-text-2 font-medium">{l}</div>
+              <div className="text-xs md:text-sm text-text-2 font-medium">{l}</div>
             </div>
           ))}
         </div>
@@ -209,7 +209,7 @@ function Stats() {
 function HowItWorks() {
   const steps = [
     { n:'01',icon:'📤',bg:'rgba(124,58,237,.15)',title:'Upload your material',desc:'Drop in a PDF, paste your lecture notes, or an article URL. StudyWise reads it all instantly.' },
-    { n:'02',icon:'🛠️',bg:'rgba(236,72,153,.15)',title:'Pick your study tool',desc:'Explanations, quizzes, flashcards, mind maps, Tutor chat, practice problems — switch anytime.' },
+    { n:'02',icon:'🛠️',bg:'rgba(236,72,153,.15)',title:'Pick your study tool',desc:'Explanations, quizzes, flashcards, mind maps, tutor chat, practice problems — switch anytime.' },
     { n:'03',icon:'🎯',bg:'rgba(6,182,212,.15)', title:'Learn and ace your exams',desc:'Track your progress, build streaks, and watch your understanding grow every session.' },
   ]
   return (
@@ -246,14 +246,14 @@ function Features() {
         <div className="mb-14">
           <div className="eyebrow mb-4">🔥 Everything you need</div>
           <h2 className="section-title text-4xl md:text-5xl mb-4">Every tool a serious<br/><span className="grad-text">student needs</span></h2>
-          <p className="text-text-2 text-lg max-w-lg">Nine tools in one platform — built for students.</p>
+          <p className="text-text-2 text-lg max-w-lg">Nine powerful study tools in one platform — built for every student.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
           {/* Big: Quiz */}
           <div className="md:col-span-5 md:row-span-2 glass grad-border rounded-2xl p-7 hover:-translate-y-1 transition-transform">
             <Tag free>✅ Free & Premium</Tag>
             <div className="w-11 h-11 rounded-xl flex items-center justify-center text-2xl mb-3" style={{ background:'rgba(16,185,129,.15)' }}>✅</div>
-            <h3 className="font-display font-bold text-lg mb-2 text-white">Quiz Generator</h3>
+            <h3 className="font-display font-bold text-lg mb-2 text-white">AI Quiz Generator</h3>
             <p className="text-sm text-text-2 leading-relaxed mb-4">Multiple-choice questions from your content. Instant scoring, explanation per question.</p>
             <div className="rounded-xl p-3.5" style={{ background:'rgba(255,255,255,.03)',border:'1px solid rgba(255,255,255,.07)' }}>
               <p className="text-xs font-semibold text-white mb-2.5">What is the primary function of mitochondria?</p>
@@ -270,7 +270,7 @@ function Features() {
             <Tag free>💡 Free (Basic) · Premium (All)</Tag>
             <div className="w-11 h-11 rounded-xl flex items-center justify-center text-2xl mb-3" style={{ background:'rgba(124,58,237,.15)' }}>💡</div>
             <h3 className="font-display font-bold text-lg mb-2 text-white">Adaptive Explanations</h3>
-            <p className="text-sm text-text-2 leading-relaxed mb-3">Choose your level — Explains exactly the way you need it.</p>
+            <p className="text-sm text-text-2 leading-relaxed mb-3">Choose your level — AI explains exactly the way you need it.</p>
             <div className="flex gap-2">
               <span className="px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-400">🟢 Simple</span>
               <span className="px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-400">🟡 Medium</span>
@@ -307,7 +307,7 @@ function Features() {
             <Tag>🤖 Premium</Tag>
             <div className="w-11 h-11 rounded-xl flex items-center justify-center text-2xl mb-3" style={{ background:'rgba(124,58,237,.15)' }}>🤖</div>
             <h3 className="font-display font-bold text-lg mb-2 text-white">Tutor Chat</h3>
-            <p className="text-sm text-text-2 leading-relaxed">Ask follow-up questions. Like a personal tutor 24/7.</p>
+            <p className="text-sm text-text-2 leading-relaxed">Ask follow-up questions about your content. Like having a personal tutor 24/7.</p>
           </div>
           {/* Pomodoro */}
           <div className="md:col-span-4 glass grad-border rounded-2xl p-7 hover:-translate-y-1 transition-transform">
@@ -449,9 +449,9 @@ function Referral() {
 /* ─── TESTIMONIALS ──────────────────────────────────── */
 function Testimonials() {
   const t = [
-    ['"I used to spend hours on Organic Chemistry. StudyWise explained it better in 2 minutes than my lecturer did all semester."','Amaka O.','300L Biochemistry, UNILAG','linear-gradient(135deg,#7C3AED,#EC4899)','A'],
-    ['"Studied for GNS in one night using flashcards and scored 85. My roommates are all using it now."','Chisom E.','200L Law, UNN','linear-gradient(135deg,#06B6D4,#7C3AED)','C'],
-    ['"₦500 a month is nothing. This app paid for itself the first week."','Emmanuel K.','400L Engineering, ABU','linear-gradient(135deg,#F59E0B,#EC4899)','E'],
+    ['"I used to spend hours struggling with Organic Chemistry. StudyWise explained it better in 2 minutes than my lecturer did all semester."','Amaka O.','300L Biochemistry, University of Lagos','linear-gradient(135deg,#7C3AED,#EC4899)','A'],
+    ['"Studied for GNS in one night using flashcards and scored 85. My roommates are all using it now."','Chisom E.','200L Law, University of Nigeria','linear-gradient(135deg,#06B6D4,#7C3AED)','C'],
+    ['"The subscription pays for itself in the first week. I've replaced so many textbooks and tutors with this."','Emmanuel K.','400L Engineering, ABU Zaria','linear-gradient(135deg,#F59E0B,#EC4899)','E'],
   ]
   return (
     <section className="py-20 pb-28">
@@ -488,7 +488,7 @@ function Footer() {
               <div className="w-9 h-9 rounded-xl flex items-center justify-center text-xl" style={{ background:'linear-gradient(135deg,#7C3AED,#EC4899)' }}>📚</div>
               <span className="font-display font-extrabold text-xl text-white">StudyWise</span>
             </div>
-            <p className="text-sm text-text-2 leading-relaxed max-w-[200px]">Study platform for university students.</p>
+            <p className="text-sm text-text-2 leading-relaxed max-w-[200px]">Smart study platform for students at every level — primary, secondary and university.</p>
           </div>
           {[{title:'Product',links:['Features','Pricing','Referral','Changelog']},{title:'Company',links:['About','Blog','Contact','Careers']},{title:'Legal',links:['Privacy Policy','Terms of Use','Cookie Policy']}].map(col => (
             <div key={col.title}>
@@ -526,7 +526,7 @@ export default function LandingPage() {
       <section className="py-20">
         <div className="page-container text-center">
           <h2 className="section-title text-4xl md:text-5xl mb-4">Ready to study smarter?<br/><span className="grad-text">Start free today.</span></h2>
-          <p className="text-text-2 text-lg mb-8">3 days full access. No credit card. Cancel anytime.</p>
+          <p className="text-text-2 text-lg mb-8">3 days full access. No credit card needed. Cancel anytime.</p>
           <Link to="/register" className="btn-primary text-lg px-10 py-5">🚀 Create free account</Link>
         </div>
       </section>
