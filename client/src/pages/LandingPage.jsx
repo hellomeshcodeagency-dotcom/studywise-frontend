@@ -189,14 +189,14 @@ function Stats() {
   return (
     <section className="py-20">
       <div className="page-container">
-        <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-white/8 rounded-2xl overflow-hidden border border-white/8" style={{ background:'#0E0E1A' }}>
-          {[['2,000+','Active students','grad-text'],['50k+','Quizzes taken','grad-text-cool'],['120k+','Flashcards studied',''],['4.9★','Average rating','grad-text']].map(([n,l,g]) => (
-            <div key={l} className="py-7 px-4 text-center">
-              <div className={`font-display font-extrabold tracking-tight leading-none mb-2 ${g || ''}`}
-                   style={{ fontSize:'clamp(1.5rem,6vw,3rem)', ...((!g) ? { background:'linear-gradient(135deg,#EC4899,#F59E0B)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text' } : {}) }}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden border border-white/8" style={{ background:'rgba(255,255,255,0.08)' }}>
+          {[['2k+','50k+','120k+','4.9★'],['Active students','Quizzes taken','Flashcards studied','Average rating'],['grad-text','grad-text-cool','','grad-text']].reduce((acc,_,__,arr) => arr[0].map((_,i) => ({n:arr[0][i],l:arr[1][i],g:arr[2][i]})), []).map(({n,l,g}) => (
+            <div key={l} className="py-7 px-3 text-center" style={{ background:'#0E0E1A' }}>
+              <div className={`font-display font-extrabold text-2xl sm:text-4xl md:text-5xl tracking-tight leading-none mb-2 ${g || ''}`}
+                   style={(!g) ? { background:'linear-gradient(135deg,#EC4899,#F59E0B)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text' } : {}}>
                 {n}
               </div>
-              <div className="text-xs md:text-sm text-text-2 font-medium">{l}</div>
+              <div className="text-[0.65rem] sm:text-xs md:text-sm text-text-2 font-medium leading-tight">{l}</div>
             </div>
           ))}
         </div>
@@ -488,7 +488,7 @@ function Footer() {
               <div className="w-9 h-9 rounded-xl flex items-center justify-center text-xl" style={{ background:'linear-gradient(135deg,#7C3AED,#EC4899)' }}>📚</div>
               <span className="font-display font-extrabold text-xl text-white">StudyWise</span>
             </div>
-            <p className="text-sm text-text-2 leading-relaxed max-w-[200px]">Smart study platform for students at every level.</p>
+            <p className="text-sm text-text-2 leading-relaxed max-w-[200px]">Smart study platform for students at every level — primary, secondary and university.</p>
           </div>
           {[{title:'Product',links:['Features','Pricing','Referral','Changelog']},{title:'Company',links:['About','Blog','Contact','Careers']},{title:'Legal',links:['Privacy Policy','Terms of Use','Cookie Policy']}].map(col => (
             <div key={col.title}>
@@ -501,7 +501,7 @@ function Footer() {
         </div>
         <div className="pt-7 border-t border-white/8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-text-3">
           <span>© 2025 StudyWise. All rights reserved.</span>
-          <span>Made with ❤️ by MeshCode 🇳🇬</span>
+          <span>Made with ❤️ in Nigeria 🇳🇬</span>
         </div>
       </div>
     </footer>
