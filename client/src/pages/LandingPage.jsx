@@ -100,7 +100,7 @@ function Hero() {
           {/* Copy */}
           <div className="animate-fade-up">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6" style={{ background:'rgba(124,58,237,.15)',border:'1px solid rgba(124,58,237,.3)',color:'#9D5FF5' }}>
-              🇳🇬 Made for Nigerian students &nbsp;·&nbsp;<span style={{ color:'#F472B6' }}>AI-Powered</span>
+              Made for students &nbsp;·&nbsp;<span style={{ color:'#F472B6' }}>AI-Powered</span>
             </div>
             <h1 className="section-title mb-5" style={{ fontSize:'clamp(2.5rem,5vw,3.75rem)' }}>
               Study smarter.<br/>Score <span className="grad-text">higher.</span><br/>Graduate <span className="grad-text-cool">stronger.</span>
