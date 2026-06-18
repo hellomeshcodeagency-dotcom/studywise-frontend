@@ -225,8 +225,7 @@ export default function AdminPage() {
       <aside className="fixed left-0 top-0 h-screen w-60 flex flex-col z-40 border-r border-white/8" style={{ background: '#0A0A14' }}>
         <div className="px-6 py-5 border-b border-white/8">
           <div className="flex items-center gap-2.5">
-            <img src="/logo.png" alt="StudyWise" className="w-8 h-8 rounded-lg object-contain" />
-            <span className="font-display font-extrabold text-lg text-white">StudyWise</span>
+            <img src="/logo.png" alt="StudyWise" className="w-10 h-10 rounded-lg object-contain" />
           </div>
           <div className="mt-2 flex items-center gap-1.5 text-[0.65rem] font-bold uppercase tracking-wider" style={{ color: '#9D5FF5' }}>
             <Shield size={11}/> Admin Panel
