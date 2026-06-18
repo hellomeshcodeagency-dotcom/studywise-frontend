@@ -20,7 +20,7 @@ function Navbar() {
       <div className="page-container">
         <div className="h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5 no-underline">
-            <img src="/logo.png" alt="StudyWise" className="w-11 h-11 rounded-xl object-contain" />
+            <img src="/logo.png" alt="StudyWise" className="w-70 h-40 rounded-xl object-contain" />
           </Link>
           <ul className="hidden md:flex items-center gap-8 list-none">
             {[['#features','Features'],['#how','How it works'],['#pricing','Pricing'],['#referral','Referral']].map(([h,l]) => (
@@ -484,7 +484,7 @@ function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-12">
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <img src="/logo.png" alt="StudyWise" className="w-11 h-11 rounded-xl object-contain" />
+              <img src="/logo.png" alt="StudyWise" className="w-70 h-40 rounded-xl object-contain" />
             </div>
             <p className="text-sm text-text-2 leading-relaxed max-w-[200px]">Smart study platform for students at every level — primary, secondary and university.</p>
           </div>
