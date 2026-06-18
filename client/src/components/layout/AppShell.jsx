@@ -3,7 +3,6 @@ import { useAuth } from '../../context/AuthContext.jsx'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { LogOut, Menu, X } from 'lucide-react'
-import VoiceTutor from '../ui/VoiceTutor.jsx'
 
 const NAV_LINKS = [
   { to: '/dashboard', icon: '🏠', label: 'Dashboard' },
@@ -126,9 +125,6 @@ export default function AppShell({ children }) {
       <div className="md:ml-60 pt-14 md:pt-0 pb-20 md:pb-0 min-h-screen">
         {children}
       </div>
-
-      {/* Voice Tutor — floats on every page */}
-      <VoiceTutor />
 
       {/* Mobile bottom nav */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-white/8"
