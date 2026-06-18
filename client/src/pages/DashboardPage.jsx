@@ -97,7 +97,7 @@ export default function DashboardPage() {
               <span className="text-xl">⚠️</span>
               <div>
                 <div className="text-sm font-bold text-amber-400">Trial ends {days===0?'today':'tomorrow'}!</div>
-                <div className="text-xs text-text-2">Upgrade to keep full access — ₦500/month</div>
+                <div className="text-xs text-text-2">Upgrade to keep full access — ₦700/month</div>
               </div>
             </div>
             <button onClick={() => toast('Paystack payments coming soon! 🚀')} className="btn-primary text-xs py-2 px-4 flex-shrink-0">
