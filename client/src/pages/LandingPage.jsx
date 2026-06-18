@@ -100,13 +100,13 @@ function Hero() {
           {/* Copy */}
           <div className="animate-fade-up">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6" style={{ background:'rgba(124,58,237,.15)',border:'1px solid rgba(124,58,237,.3)',color:'#9D5FF5' }}>
-              Made for students &nbsp;·&nbsp;<span style={{ color:'#F472B6' }}>AI-Powered</span>
+              Made for students &nbsp;·&nbsp;<span style={{ color:'#F472B6' }}></span>
             </div>
             <h1 className="section-title mb-5" style={{ fontSize:'clamp(2.5rem,5vw,3.75rem)' }}>
               Study smarter.<br/>Score <span className="grad-text">higher.</span><br/>Graduate <span className="grad-text-cool">stronger.</span>
             </h1>
             <p className="text-text-2 text-lg leading-relaxed mb-9 max-w-[480px]">
-              Upload your textbooks, notes, or articles — StudyWise turns them into explanations, quizzes, flashcards, mind maps and more. Powered by Grok AI.
+              Upload your textbooks, notes, or articles — StudyWise turns them into explanations, quizzes, flashcards, mind maps and more.
             </p>
             <div className="flex items-center gap-4 flex-wrap">
               <Link to="/register" className="btn-primary text-base px-8 py-4">🚀 Start free for 3 days</Link>
@@ -154,7 +154,7 @@ function Hero() {
                 ))}
               </div>
               <div className="rounded-xl p-3.5" style={{ background:'rgba(255,255,255,.03)',border:'1px solid rgba(255,255,255,.07)' }}>
-                <div className="text-[0.62rem] font-bold uppercase tracking-widest mb-2" style={{ color:'#9D5FF5' }}>💡 AI Explanation — Medium Level</div>
+                <div className="text-[0.62rem] font-bold uppercase tracking-widest mb-2" style={{ color:'#9D5FF5' }}>💡 Explanation — Medium Level</div>
                 <div className="text-xs text-text-2 leading-relaxed min-h-[50px]">
                   {text}<span className="inline-block w-0.5 h-3.5 bg-violet-l ml-0.5 align-middle animate-blink"/>
                 </div>
@@ -169,7 +169,7 @@ function Hero() {
 
 /* ─── MARQUEE ───────────────────────────────────────── */
 function Marquee() {
-  const items = ['AI Explanations','Smart Quizzes','Flashcard Decks','Mind Maps','PDF Upload','Practice Problems','AI Tutor Chat','Study Summaries','Pomodoro Timer','Progress Tracking']
+  const items = ['Explanations','Smart Quizzes','Flashcard Decks','Mind Maps','PDF Upload','Practice Problems','Tutor Chat','Study Summaries','Pomodoro Timer','Progress Tracking']
   const doubled = [...items,...items]
   return (
     <div className="py-4 border-t border-b border-white/8 overflow-hidden">
@@ -209,7 +209,7 @@ function Stats() {
 function HowItWorks() {
   const steps = [
     { n:'01',icon:'📤',bg:'rgba(124,58,237,.15)',title:'Upload your material',desc:'Drop in a PDF, paste your lecture notes, or an article URL. StudyWise reads it all instantly.' },
-    { n:'02',icon:'🛠️',bg:'rgba(236,72,153,.15)',title:'Pick your study tool',desc:'Explanations, quizzes, flashcards, mind maps, AI chat, practice problems — switch anytime.' },
+    { n:'02',icon:'🛠️',bg:'rgba(236,72,153,.15)',title:'Pick your study tool',desc:'Explanations, quizzes, flashcards, mind maps, Tutor chat, practice problems — switch anytime.' },
     { n:'03',icon:'🎯',bg:'rgba(6,182,212,.15)', title:'Learn and ace your exams',desc:'Track your progress, build streaks, and watch your understanding grow every session.' },
   ]
   return (
@@ -246,14 +246,14 @@ function Features() {
         <div className="mb-14">
           <div className="eyebrow mb-4">🔥 Everything you need</div>
           <h2 className="section-title text-4xl md:text-5xl mb-4">Every tool a serious<br/><span className="grad-text">student needs</span></h2>
-          <p className="text-text-2 text-lg max-w-lg">Nine AI-powered tools in one platform — built for university students.</p>
+          <p className="text-text-2 text-lg max-w-lg">Nine tools in one platform — built for students.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
           {/* Big: Quiz */}
           <div className="md:col-span-5 md:row-span-2 glass grad-border rounded-2xl p-7 hover:-translate-y-1 transition-transform">
             <Tag free>✅ Free & Premium</Tag>
             <div className="w-11 h-11 rounded-xl flex items-center justify-center text-2xl mb-3" style={{ background:'rgba(16,185,129,.15)' }}>✅</div>
-            <h3 className="font-display font-bold text-lg mb-2 text-white">AI Quiz Generator</h3>
+            <h3 className="font-display font-bold text-lg mb-2 text-white">Quiz Generator</h3>
             <p className="text-sm text-text-2 leading-relaxed mb-4">Multiple-choice questions from your content. Instant scoring, explanation per question.</p>
             <div className="rounded-xl p-3.5" style={{ background:'rgba(255,255,255,.03)',border:'1px solid rgba(255,255,255,.07)' }}>
               <p className="text-xs font-semibold text-white mb-2.5">What is the primary function of mitochondria?</p>
@@ -270,7 +270,7 @@ function Features() {
             <Tag free>💡 Free (Basic) · Premium (All)</Tag>
             <div className="w-11 h-11 rounded-xl flex items-center justify-center text-2xl mb-3" style={{ background:'rgba(124,58,237,.15)' }}>💡</div>
             <h3 className="font-display font-bold text-lg mb-2 text-white">Adaptive Explanations</h3>
-            <p className="text-sm text-text-2 leading-relaxed mb-3">Choose your level — AI explains exactly the way you need it.</p>
+            <p className="text-sm text-text-2 leading-relaxed mb-3">Choose your level — Explains exactly the way you need it.</p>
             <div className="flex gap-2">
               <span className="px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-400">🟢 Simple</span>
               <span className="px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-400">🟡 Medium</span>
@@ -306,7 +306,7 @@ function Features() {
           <div className="md:col-span-4 glass grad-border rounded-2xl p-7 hover:-translate-y-1 transition-transform">
             <Tag>🤖 Premium</Tag>
             <div className="w-11 h-11 rounded-xl flex items-center justify-center text-2xl mb-3" style={{ background:'rgba(124,58,237,.15)' }}>🤖</div>
-            <h3 className="font-display font-bold text-lg mb-2 text-white">AI Tutor Chat</h3>
+            <h3 className="font-display font-bold text-lg mb-2 text-white">Tutor Chat</h3>
             <p className="text-sm text-text-2 leading-relaxed">Ask follow-up questions. Like a personal tutor 24/7.</p>
           </div>
           {/* Pomodoro */}
@@ -334,7 +334,7 @@ function TrialBanner() {
             <div className="max-w-lg">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-5" style={{ background:'rgba(245,158,11,.18)',border:'1px solid rgba(245,158,11,.35)',color:'#F59E0B' }}>⏳ 3-day free trial</div>
               <h2 className="section-title text-4xl md:text-5xl mb-4">3 days free.<br/><span className="grad-text">No card. No catch.</span></h2>
-              <p className="text-text-2 text-lg leading-relaxed mb-7">Full access to every feature — PDF uploads, unlimited quizzes, flashcards, mind maps, AI tutor chat, and more.</p>
+              <p className="text-text-2 text-lg leading-relaxed mb-7">Full access to every feature — PDF uploads, unlimited quizzes, flashcards, mind maps, Tutor chat, and more.</p>
               <Link to="/register" className="btn-primary text-base px-8 py-4">🚀 Claim your free trial</Link>
             </div>
             <div className="flex-shrink-0 text-center rounded-2xl p-10" style={{ background:'rgba(255,255,255,.05)',border:'1px solid rgba(255,255,255,.1)' }}>
@@ -360,9 +360,9 @@ function Pricing() {
     [true,'Save up to 3 sessions'],
     [false,'PDF & URL upload'],
     [false,'Mind maps & summaries'],
-    [false,'AI tutor chat & practice problems'],
+    [false,'Tutor chat & practice problems'],
   ]
-  const premF = ['PDF, URL & text upload','Explanations (all 3 levels)','Unlimited quiz questions','Unlimited flashcards + study mode','Mind maps & smart summaries','AI tutor chat','Practice problems','Unlimited sessions','Full progress dashboard']
+  const premF = ['PDF, URL & text upload','Explanations (all 3 levels)','Unlimited quiz questions','Unlimited flashcards + study mode','Mind maps & smart summaries','Tutor chat','Practice problems','Unlimited sessions','Full progress dashboard']
   return (
     <section className="py-20 pb-28" id="pricing">
       <div className="page-container">
@@ -488,7 +488,7 @@ function Footer() {
               <div className="w-9 h-9 rounded-xl flex items-center justify-center text-xl" style={{ background:'linear-gradient(135deg,#7C3AED,#EC4899)' }}>📚</div>
               <span className="font-display font-extrabold text-xl text-white">StudyWise</span>
             </div>
-            <p className="text-sm text-text-2 leading-relaxed max-w-[200px]">AI-powered study platform for Nigerian university students.</p>
+            <p className="text-sm text-text-2 leading-relaxed max-w-[200px]">Study platform for university students.</p>
           </div>
           {[{title:'Product',links:['Features','Pricing','Referral','Changelog']},{title:'Company',links:['About','Blog','Contact','Careers']},{title:'Legal',links:['Privacy Policy','Terms of Use','Cookie Policy']}].map(col => (
             <div key={col.title}>
