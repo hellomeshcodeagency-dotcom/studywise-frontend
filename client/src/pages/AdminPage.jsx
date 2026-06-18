@@ -289,7 +289,7 @@ export default function AdminPage() {
                     <AdminStat icon="📚" label="Total Sessions" value={stats?.stats?.totalSessions || 0} sub="Study sessions created"     color="rgba(6,182,212,.15)" />
                     <AdminStat icon="✅" label="Total Quizzes"  value={stats?.stats?.totalQuizzes  || 0} sub="Quizzes completed"           color="rgba(124,58,237,.15)" />
                     <AdminStat icon="🔓" label="Free Users"     value={stats?.stats?.freeUsers     || 0} sub="On free plan"               color="rgba(255,255,255,.06)" />
-                    <AdminStat icon="💰" label="Revenue Est."   value={`₦${((stats?.stats?.premiumUsers||0)*500).toLocaleString()}`} sub="Monthly @ ₦500/user" color="rgba(16,185,129,.15)" />
+                    <AdminStat icon="💰" label="Revenue Est."   value={`₦${((stats?.stats?.premiumUsers||0)*700).toLocaleString()}`} sub="Monthly @ ₦700/user" color="rgba(16,185,129,.15)" />
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
