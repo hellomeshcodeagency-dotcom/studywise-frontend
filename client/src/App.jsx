@@ -8,7 +8,8 @@ import StudyPage      from './pages/StudyPage.jsx'
 import HistoryPage    from './pages/HistoryPage.jsx'
 import ProfilePage    from './pages/ProfilePage.jsx'
 import AdminPage      from './pages/AdminPage.jsx'
-import StudyPlanPage  from './pages/StudyPlanPage.jsx'
+import StudyPlanPage      from './pages/StudyPlanPage.jsx'
+import PaymentVerifyPage  from './pages/PaymentVerifyPage.jsx'
 import NotFoundPage   from './pages/NotFoundPage.jsx'
 
 function Spinner() {
@@ -47,7 +48,8 @@ export default function App() {
         <Route path="/dashboard" element={<PrivateRoute><DashboardPage /></PrivateRoute>} />
         <Route path="/study"     element={<PrivateRoute><StudyPage /></PrivateRoute>} />
         <Route path="/history"   element={<PrivateRoute><HistoryPage /></PrivateRoute>} />
-        <Route path="/plan"      element={<PrivateRoute><StudyPlanPage /></PrivateRoute>} />
+        <Route path="/plan"          element={<PrivateRoute><StudyPlanPage /></PrivateRoute>} />
+        <Route path="/payment/verify" element={<PrivateRoute><PaymentVerifyPage /></PrivateRoute>} />
         <Route path="/profile"   element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
         <Route path="/admin"     element={<AdminRoute><AdminPage /></AdminRoute>} />
         <Route path="*"          element={<NotFoundPage />} />
