@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext.jsx'
 import AppShell from '../components/layout/AppShell.jsx'
 import api from '../api/axios.js'
+import UpgradeButton from '../components/ui/UpgradeButton.jsx'
 import toast from 'react-hot-toast'
 import { RotateCcw, Send, Timer, X, Check, ChevronLeft, ChevronRight, Lock, Mic, MicOff, Volume2, VolumeX } from 'lucide-react'
 
@@ -13,7 +14,7 @@ function LockedOverlay({ feature }) {
         <div className="text-4xl mb-3">🔒</div>
         <div className="font-display font-bold text-white text-base mb-2">{feature} is Premium</div>
         <p className="text-sm text-text-2 mb-4">Upgrade for ₦700/month</p>
-        <button onClick={() => toast('Paystack payments coming soon! 🚀')} className="btn-primary text-sm py-2.5 px-5">⚡ Upgrade Now</button>
+        <UpgradeButton />
       </div>
     </div>
   )
