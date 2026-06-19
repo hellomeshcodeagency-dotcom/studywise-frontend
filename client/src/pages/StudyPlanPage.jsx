@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
 import AppShell from '../components/layout/AppShell.jsx'
 import api from '../api/axios.js'
+import UpgradeButton from '../components/ui/UpgradeButton.jsx'
 import toast from 'react-hot-toast'
 import { Plus, Trash2, Calendar, CheckCircle, Circle, ChevronDown, ChevronUp, Lock, Zap, RefreshCw } from 'lucide-react'
 
@@ -15,9 +16,7 @@ function PremiumLock() {
       <p className="text-text-2 text-sm mb-6 max-w-sm mx-auto">
         Get a personalised day-by-day study schedule built around your exam date and weak areas.
       </p>
-      <button onClick={() => toast('Paystack payments coming soon! 🚀')} className="btn-primary">
-        ⚡ Upgrade for ₦700/month
-      </button>
+      <UpgradeButton />
     </div>
   )
 }
