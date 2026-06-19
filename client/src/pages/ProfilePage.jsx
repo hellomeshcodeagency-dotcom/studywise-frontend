@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
 import api from '../api/axios.js'
+import UpgradeButton from '../components/ui/UpgradeButton.jsx'
 import toast from 'react-hot-toast'
 import { User, Lock, Copy, Check, Eye, EyeOff, Save, LogOut } from 'lucide-react'
 import AppShell from '../components/layout/AppShell.jsx'
@@ -265,9 +266,7 @@ export default function ProfilePage() {
                   <div className="text-xs text-text-2">{planLabel}</div>
                 </div>
                 {!isPremium && (
-                  <button onClick={() => toast('Paystack payments coming soon! 🚀')} className="btn-primary text-sm py-2 px-5">
-                    Upgrade ₦700/mo
-                  </button>
+                  <UpgradeButton />
                 )}
               </div>
 
