@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
 import AppShell from '../components/layout/AppShell.jsx'
 import api from '../api/axios.js'
+import UpgradeButton from '../components/ui/UpgradeButton.jsx'
 import toast from 'react-hot-toast'
 import { Copy, Check, ChevronRight, Lock, Plus } from 'lucide-react'
 
@@ -100,9 +101,7 @@ export default function DashboardPage() {
                 <div className="text-xs text-text-2">Upgrade to keep full access — ₦700/month</div>
               </div>
             </div>
-            <button onClick={() => toast('Paystack payments coming soon! 🚀')} className="btn-primary text-xs py-2 px-4 flex-shrink-0">
-              Upgrade now
-            </button>
+            <UpgradeButton />
           </div>
         )}
 
