@@ -187,16 +187,36 @@ function QuizTool({ content, sessionId, isPremium }) {
   return (
     <div>
       <div className="flex items-center gap-2 mb-4 flex-wrap">
-        <div className="flex rounded-xl overflow-hidden border border-white/8">
-          {(isPremium?[5,10,15]:[3]).map(n => (
-            <button key={n} onClick={() => setCount(n)}
-              className={`px-3 py-2 text-xs font-bold transition-all ${count===n?'text-white':'text-text-3'}`}
-              style={count===n?{background:'linear-gradient(135deg,#7C3AED,#EC4899)'}:{background:'rgba(255,255,255,.03)'}}>
-              {n}
-            </button>
-          ))}
-        </div>
-        {!isPremium&&<span className="text-[0.65rem] text-text-3">🔒 More with Premium</span>}
+        {isPremium ? (
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-text-2 font-medium">Questions:</span>
+            <div className="flex rounded-xl overflow-hidden border border-white/8">
+              {[5,10,15,20].map(n => (
+                <button key={n} onClick={() => setCount(n)}
+                  className={`px-3 py-2 text-xs font-bold transition-all ${count===n?'text-white':'text-text-3'}`}
+                  style={count===n?{background:'linear-gradient(135deg,#7C3AED,#EC4899)'}:{background:'rgba(255,255,255,.03)'}}>
+                  {n}
+                </button>
+              ))}
+            </div>
+            <span className="text-xs text-text-3">or</span>
+            <input
+              type="number"
+              min="1"
+              max="50"
+              value={count}
+              onChange={e => setCount(Math.min(50, Math.max(1, parseInt(e.target.value) || 1)))}
+              className="input-field text-sm py-2 text-center"
+              style={{ width: '70px' }}
+              placeholder="Custom"
+            />
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-text-2">3 questions max</span>
+            <span className="text-[0.65rem] text-text-3">🔒 More with Premium</span>
+          </div>
+        )}
         <button onClick={generate} disabled={loading} className="btn-primary text-sm py-2 px-4 ml-auto">
           {loading?<span className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"/>:'✅ Generate'}
         </button>
@@ -270,12 +290,12 @@ function FlashcardsTool({ content, sessionId, isPremium }) {
   const [studyFlipped, setStudyFlipped] = useState(false)
   const [known, setKnown]         = useState([])
   const [loading, setLoading]     = useState(false)
-  const count = isPremium ? 12 : 3
+  const [fcCount, setFcCount] = useState(isPremium ? 12 : 3)
 
   async function generate() {
     setLoading(true); setCards([]); setFlipped({}); setKnown([]); setStudyMode(false)
     try {
-      const res = await api.post('/study/flashcards', { session_id:sessionId, content, count })
+      const res = await api.post('/study/flashcards', { session_id:sessionId, content, count:fcCount })
       setCards(res.data.cards)
     } catch { toast.error('AI error. Try again.') }
     finally { setLoading(false) }
@@ -331,7 +351,33 @@ function FlashcardsTool({ content, sessionId, isPremium }) {
   return (
     <div>
       <div className="flex items-center gap-2 mb-4 flex-wrap">
-        <span className="text-sm text-text-2">{count} cards {!isPremium&&'· 🔒 More with Premium'}</span>
+        {isPremium ? (
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-xs text-text-2 font-medium">Cards:</span>
+            <div className="flex rounded-xl overflow-hidden border border-white/8">
+              {[8,12,20,30].map(n => (
+                <button key={n} onClick={() => setFcCount(n)}
+                  className={`px-3 py-2 text-xs font-bold transition-all ${fcCount===n?'text-white':'text-text-3'}`}
+                  style={fcCount===n?{background:'linear-gradient(135deg,#7C3AED,#EC4899)'}:{background:'rgba(255,255,255,.03)'}}>
+                  {n}
+                </button>
+              ))}
+            </div>
+            <span className="text-xs text-text-3">or</span>
+            <input
+              type="number"
+              min="1"
+              max="50"
+              value={fcCount}
+              onChange={e => setFcCount(Math.min(50, Math.max(1, parseInt(e.target.value) || 1)))}
+              className="input-field text-sm py-2 text-center"
+              style={{ width: '70px' }}
+              placeholder="Custom"
+            />
+          </div>
+        ) : (
+          <span className="text-sm text-text-2">3 cards max · 🔒 More with Premium</span>
+        )}
         <div className="flex gap-2 ml-auto">
           <button onClick={generate} disabled={loading} className="btn-primary text-sm py-2 px-4">
             {loading?<span className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"/>:'🃏 Generate'}
