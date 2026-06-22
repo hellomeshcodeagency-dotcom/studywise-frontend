@@ -732,6 +732,16 @@ function PracticeTool({ content, sessionId, isPremium }) {
 }
 
 /* ─── MAIN PAGE ─────────────────────────────────────── */
+
+async function goToPayment() {
+  try {
+    const res = await api.post('/payment/initialize')
+    window.location.href = res.data.authorization_url
+  } catch {
+    window.location.href = '/profile'
+  }
+}
+
 export default function StudyPage() {
   const { hasPremium } = useAuth()
   const isPremium = hasPremium()
@@ -770,7 +780,7 @@ export default function StudyPage() {
       toast.error('Please upload a PDF, Word (.docx), PowerPoint (.pptx), or text (.txt) file')
       return
     }
-    if (!isPremium) { toast.error('File upload requires Premium!'); return }
+    if (!isPremium) { goToPayment(); return }
     setUploading(true)
     try {
       const form = new FormData()
@@ -790,7 +800,7 @@ export default function StudyPage() {
       if (!text) { toast.error('Paste some text first'); return }
     } else {
       if (!urlInput.trim()) { toast.error('Enter a URL'); return }
-      if (!isPremium) { toast.error('URL input requires Premium!'); return }
+      if (!isPremium) { goToPayment(); return }
       text = `[Study this article: ${urlInput}]`
     }
     setUploading(true)
@@ -849,7 +859,7 @@ export default function StudyPage() {
             )}
             {inputMode==='file' && (
               <div>
-                <div onClick={() => isPremium?fileRef.current?.click():toast.error('File upload requires Premium!')}
+                <div onClick={() => isPremium?fileRef.current?.click():goToPayment()}
                   className="rounded-xl border-2 border-dashed p-8 text-center cursor-pointer transition-all"
                   style={{borderColor:'rgba(255,255,255,.12)',background:'rgba(255,255,255,.02)'}}
                   onDragOver={e => e.preventDefault()}
