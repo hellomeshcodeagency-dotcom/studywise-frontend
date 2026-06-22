@@ -191,7 +191,7 @@ function QuizTool({ content, sessionId, isPremium }) {
           <div className="flex items-center gap-2">
             <span className="text-xs text-text-2 font-medium">Questions:</span>
             <div className="flex rounded-xl overflow-hidden border border-white/8">
-              {[5,10,15,20].map(n => (
+              {[10,20,30,40,50,60].map(n => (
                 <button key={n} onClick={() => setCount(n)}
                   className={`px-3 py-2 text-xs font-bold transition-all ${count===n?'text-white':'text-text-3'}`}
                   style={count===n?{background:'linear-gradient(135deg,#7C3AED,#EC4899)'}:{background:'rgba(255,255,255,.03)'}}>
@@ -355,7 +355,7 @@ function FlashcardsTool({ content, sessionId, isPremium }) {
           <div className="flex items-center gap-2 flex-wrap">
             <span className="text-xs text-text-2 font-medium">Cards:</span>
             <div className="flex rounded-xl overflow-hidden border border-white/8">
-              {[8,12,20,30].map(n => (
+              {[8,12,20,30,50,70].map(n => (
                 <button key={n} onClick={() => setFcCount(n)}
                   className={`px-3 py-2 text-xs font-bold transition-all ${fcCount===n?'text-white':'text-text-3'}`}
                   style={fcCount===n?{background:'linear-gradient(135deg,#7C3AED,#EC4899)'}:{background:'rgba(255,255,255,.03)'}}>
