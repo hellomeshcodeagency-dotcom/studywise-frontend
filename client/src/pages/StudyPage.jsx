@@ -155,12 +155,22 @@ function ExplainTool({ content, sessionId, isPremium }) {
 
 /* ─── QUIZ ──────────────────────────────────────────── */
 function QuizTool({ content, sessionId, isPremium }) {
-  const [count, setCount]     = useState(isPremium?10:3)
+  const [count, setCount]     = useState(isPremium ? 5 : 3)
+  const [customCount, setCustomCount] = useState('')
   const [questions, setQs]    = useState([])
   const [answers, setAnswers] = useState({})
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [score, setScore]     = useState(null)
+
+  const QUIZ_PRESETS = isPremium ? [5, 10, 15, 20] : [3]
+
+  function handleCustomChange(e) {
+    const val = e.target.value
+    setCustomCount(val)
+    const num = parseInt(val)
+    if (num >= 1 && num <= 50) setCount(num)
+  }
 
   async function generate() {
     setLoading(true); setQs([]); setAnswers({}); setSubmitted(false); setScore(null)
@@ -188,28 +198,28 @@ function QuizTool({ content, sessionId, isPremium }) {
     <div>
       <div className="flex items-center gap-2 mb-4 flex-wrap">
         {isPremium ? (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <span className="text-xs text-text-2 font-medium">Questions:</span>
             <div className="flex rounded-xl overflow-hidden border border-white/8">
-              {[10,20,30,40,50,60].map(n => (
-                <button key={n} onClick={() => setCount(n)}
-                  className={`px-3 py-2 text-xs font-bold transition-all ${count===n?'text-white':'text-text-3'}`}
-                  style={count===n?{background:'linear-gradient(135deg,#7C3AED,#EC4899)'}:{background:'rgba(255,255,255,.03)'}}>
+              {QUIZ_PRESETS.map(n => (
+                <button key={n} onClick={() => { setCount(n); setCustomCount('') }}
+                  className={`px-3 py-2 text-xs font-bold transition-all ${count===n && customCount===''?'text-white':'text-text-3'}`}
+                  style={count===n && customCount===''?{background:'linear-gradient(135deg,#7C3AED,#EC4899)'}:{background:'rgba(255,255,255,.03)'}}>
                   {n}
                 </button>
               ))}
             </div>
-            <span className="text-xs text-text-3">or</span>
             <input
               type="number"
               min="1"
               max="50"
-              value={count}
-              onChange={e => setCount(Math.min(50, Math.max(1, parseInt(e.target.value) || 1)))}
+              value={customCount}
+              onChange={handleCustomChange}
               className="input-field text-sm py-2 text-center"
-              style={{ width: '70px' }}
+              style={{ width: '72px' }}
               placeholder="Custom"
             />
+            <span className="text-[0.65rem] text-text-3">max 50</span>
           </div>
         ) : (
           <div className="flex items-center gap-2">
@@ -290,7 +300,17 @@ function FlashcardsTool({ content, sessionId, isPremium }) {
   const [studyFlipped, setStudyFlipped] = useState(false)
   const [known, setKnown]         = useState([])
   const [loading, setLoading]     = useState(false)
-  const [fcCount, setFcCount] = useState(isPremium ? 12 : 3)
+  const [fcCount, setFcCount]     = useState(isPremium ? 10 : 3)
+  const [customFc, setCustomFc]   = useState('')
+
+  const FC_PRESETS = isPremium ? [5, 10, 15, 20] : [3]
+
+  function handleCustomFcChange(e) {
+    const val = e.target.value
+    setCustomFc(val)
+    const num = parseInt(val)
+    if (num >= 1 && num <= 50) setFcCount(num)
+  }
 
   async function generate() {
     setLoading(true); setCards([]); setFlipped({}); setKnown([]); setStudyMode(false)
@@ -355,25 +375,25 @@ function FlashcardsTool({ content, sessionId, isPremium }) {
           <div className="flex items-center gap-2 flex-wrap">
             <span className="text-xs text-text-2 font-medium">Cards:</span>
             <div className="flex rounded-xl overflow-hidden border border-white/8">
-              {[8,12,20,30,50,70].map(n => (
-                <button key={n} onClick={() => setFcCount(n)}
-                  className={`px-3 py-2 text-xs font-bold transition-all ${fcCount===n?'text-white':'text-text-3'}`}
-                  style={fcCount===n?{background:'linear-gradient(135deg,#7C3AED,#EC4899)'}:{background:'rgba(255,255,255,.03)'}}>
+              {FC_PRESETS.map(n => (
+                <button key={n} onClick={() => { setFcCount(n); setCustomFc('') }}
+                  className={`px-3 py-2 text-xs font-bold transition-all ${fcCount===n && customFc===''?'text-white':'text-text-3'}`}
+                  style={fcCount===n && customFc===''?{background:'linear-gradient(135deg,#7C3AED,#EC4899)'}:{background:'rgba(255,255,255,.03)'}}>
                   {n}
                 </button>
               ))}
             </div>
-            <span className="text-xs text-text-3">or</span>
             <input
               type="number"
               min="1"
               max="50"
-              value={fcCount}
-              onChange={e => setFcCount(Math.min(50, Math.max(1, parseInt(e.target.value) || 1)))}
+              value={customFc}
+              onChange={handleCustomFcChange}
               className="input-field text-sm py-2 text-center"
-              style={{ width: '70px' }}
+              style={{ width: '72px' }}
               placeholder="Custom"
             />
+            <span className="text-[0.65rem] text-text-3">max 50</span>
           </div>
         ) : (
           <span className="text-sm text-text-2">3 cards max · 🔒 More with Premium</span>
@@ -617,19 +637,16 @@ function ChatTool({ content, sessionId, isPremium }) {
     <div className="relative">
       {!isPremium && <LockedOverlay feature="AI Tutor Chat"/>}
       <div className="glass rounded-2xl overflow-hidden flex flex-col" style={{height:'480px'}}>
-        {/* Header */}
         <div className="px-4 py-3 border-b border-white/8 flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-emerald-400"/>
           <span className="text-sm font-semibold text-white">AI Tutor</span>
           <span className="text-xs text-text-3 ml-1 hidden sm:inline">— Ask anything about your content</span>
           <div className="ml-auto flex items-center gap-2">
-            {/* Text toggle */}
             <button onClick={() => setShowText(s => !s)}
               className="text-[0.65rem] font-semibold px-2.5 py-1 rounded-full transition-all"
               style={{ background:showText?'rgba(124,58,237,0.25)':'rgba(255,255,255,0.06)', color:showText?'#9D5FF5':'#A0A0C0' }}>
               {showText ? 'Text ON' : 'Text OFF'}
             </button>
-            {/* Stop speaking */}
             {speaking && (
               <button onClick={stopSpeaking}
                 className="text-[0.65rem] font-semibold px-2.5 py-1 rounded-full text-amber-400"
@@ -639,8 +656,6 @@ function ChatTool({ content, sessionId, isPremium }) {
             )}
           </div>
         </div>
-
-        {/* Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-3">
           {messages.length===0 && (
             <div className="text-center py-8">
@@ -678,32 +693,24 @@ function ChatTool({ content, sessionId, isPremium }) {
           )}
           <div ref={bottomRef}/>
         </div>
-
-        {/* Input row */}
         <div className="px-3 py-3 border-t border-white/8 flex gap-2">
-          {/* Mic button */}
           <button onClick={toggleMic} disabled={loading}
             className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-all ${listening?'animate-pulse':''}`}
             style={{
               background: listening ? 'linear-gradient(135deg,#EF4444,#F59E0B)' : 'rgba(124,58,237,0.2)',
               border: `1px solid ${listening ? 'rgba(239,68,68,0.5)' : 'rgba(124,58,237,0.4)'}`,
-            }}
-            title={listening ? 'Stop listening' : 'Tap to speak'}>
+            }}>
             {listening ? <MicOff size={16} color="#fff"/> : <Mic size={16} color="#9D5FF5"/>}
           </button>
-
           <input value={input} onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key==='Enter'&&!e.shiftKey&&send()}
             placeholder={listening ? 'Listening… speak now' : 'Ask a question or tap mic…'}
             className="input-field text-sm py-2.5 flex-1"
             style={listening ? {borderColor:'rgba(239,68,68,0.5)',boxShadow:'0 0 0 2px rgba(239,68,68,0.15)'} : {}}/>
-
           <button onClick={send} disabled={loading||!input.trim()} className="btn-primary text-sm py-2.5 px-4 flex-shrink-0">
             <Send size={14}/>
           </button>
         </div>
-
-        {/* Listening indicator */}
         {listening && (
           <div className="px-4 py-2 flex items-center gap-2 border-t border-white/8"
                style={{background:'rgba(239,68,68,0.08)'}}>
@@ -869,7 +876,6 @@ export default function StudyPage() {
 
       <div className="max-w-5xl mx-auto px-4 md:px-8 py-5 md:py-8">
 
-        {/* Header */}
         <div className="flex items-center justify-between mb-5">
           <div>
             <h1 className="font-display font-extrabold text-2xl md:text-3xl text-white mb-0.5">Study Room</h1>
@@ -882,12 +888,9 @@ export default function StudyPage() {
           </button>
         </div>
 
-        {/* Input */}
         {!contentLoaded ? (
           <div className="glass rounded-2xl p-5 mb-5">
             <h2 className="font-display font-bold text-white text-base mb-4">Add your study material</h2>
-
-            {/* Mode switcher */}
             <div className="flex gap-2 mb-4 flex-wrap">
               {[['paste','✏️','Paste Text'],['file','📁','Upload File'],['url','🔗','URL']].map(([m,icon,label]) => (
                 <button key={m} onClick={() => setInputMode(m)}
@@ -897,7 +900,6 @@ export default function StudyPage() {
                 </button>
               ))}
             </div>
-
             {inputMode==='paste' && (
               <textarea value={pasteText} onChange={e => setPasteText(e.target.value)} rows={7}
                 placeholder="Paste your textbook, lecture notes, or article here…"
@@ -931,14 +933,12 @@ export default function StudyPage() {
                 <p className="text-xs text-text-3">Premium · Some sites block access — paste text instead if this fails</p>
               </div>
             )}
-
             <button onClick={loadContent} disabled={uploading} className="btn-primary text-sm py-3 px-5 w-full justify-center md:w-auto">
               {uploading?<span className="flex items-center gap-2"><span className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"/>Loading…</span>:'⚡ Load & Analyse'}
             </button>
           </div>
         ) : (
           <div>
-            {/* Content chip */}
             <div className="flex items-center gap-2 mb-4 px-3.5 py-2.5 rounded-xl" style={{background:'rgba(16,185,129,.08)',border:'1px solid rgba(16,185,129,.2)'}}>
               <span className="text-emerald-400 text-sm">✅</span>
               <span className="text-sm text-emerald-400 font-medium flex-1 truncate">{content.length.toLocaleString()} characters loaded</span>
@@ -946,8 +946,6 @@ export default function StudyPage() {
                 <X size={12}/> Change
               </button>
             </div>
-
-            {/* Tool tabs — scrollable on mobile */}
             <div className="flex gap-2 mb-5 overflow-x-auto pb-1 -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap">
               {tools.map(t => (
                 <button key={t.id} onClick={() => setActiveTool(t.id)}
@@ -958,8 +956,6 @@ export default function StudyPage() {
                 </button>
               ))}
             </div>
-
-            {/* Active tool */}
             <div>
               {activeTool==='explain'    && <ExplainTool    content={content} sessionId={sessionId} isPremium={isPremium}/>}
               {activeTool==='quiz'       && <QuizTool       content={content} sessionId={sessionId} isPremium={isPremium}/>}
