@@ -68,9 +68,7 @@ export default function AppShell({ children }) {
         ))}
         {!isPremium && (
           <div className="mt-4">
-            <button onClick={() => toast('Paystack payments coming soon! 🚀')} className="btn-primary w-full justify-center text-xs py-2.5">
-              ⚡ Upgrade — ₦700/mo
-            </button>
+            <UpgradeButton className="w-full justify-center text-xs py-2.5" />
           </div>
         )}
       </nav>
