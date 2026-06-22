@@ -21,9 +21,19 @@ function StatCard({ icon, label, value, sub, bg }) {
 }
 
 function ToolCard({ icon, title, desc, locked, onClick, bg }) {
+  async function handleUpgrade() {
+    try {
+      const api = (await import('../api/axios.js')).default
+      const res = await api.post('/payment/initialize')
+      window.location.href = res.data.authorization_url
+    } catch {
+      window.location.href = '/profile'
+    }
+  }
+
   return (
-    <button onClick={locked ? () => toast('Upgrade to Premium to unlock! 🔒') : onClick}
-      className={`glass rounded-xl p-4 text-left w-full transition-all active:scale-95 ${locked ? 'opacity-60' : 'hover:border-violet/40 active:bg-white/8'}`}
+    <button onClick={locked ? handleUpgrade : onClick}
+      className={`glass rounded-xl p-4 text-left w-full transition-all active:scale-95 ${locked ? 'opacity-70 hover:opacity-100' : 'hover:border-violet/40 active:bg-white/8'}`}
       style={{ border: '1px solid rgba(255,255,255,.08)' }}>
       <div className="flex items-start justify-between mb-2.5">
         <div className="w-9 h-9 rounded-lg flex items-center justify-center text-lg" style={{ background: bg }}>{icon}</div>
